@@ -1,0 +1,1 @@
+# quickblox-javascript-getting-started-chat-internal
