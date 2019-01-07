@@ -640,6 +640,7 @@
     display: flex;
     flex: 0 0 66px;
     padding: 13px 18px 13px 8px;
+    position: relative;
 }
 
 .dialog_form.m_dialog_form_update {
@@ -663,6 +664,11 @@
     margin: 0 16px 0 0;
     background: #fff;
     color: #778594;
+}
+
+.a_btn{
+    position: absolute;
+    right: 18px;
 }
 
 @keyframes blink {
