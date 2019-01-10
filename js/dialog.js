@@ -101,16 +101,16 @@ Dialog.prototype.renderDialog = function (dialog, setAsFirst) {
         return elem;
     }
 
-    if (dialog.type !== CONSTANTS.DIALOG_TYPES.CHAT) {
-        return false;
-    }
+    if (dialog.type !== CONSTANTS.DIALOG_TYPES.CHAT) return false;
 
     var template = helpers.fillTemplate('tpl_userConversations', {dialog: dialog});
     elem = helpers.toHtml(template)[0];
 
     if (!setAsFirst) {
+        console.log(setAsFirst, 'rendeering dialog');
         self.dialogsListContainer.appendChild(elem);
     } else {
+        console.log(setAsFirst, 'rendeering dialog');
         self.dialogsListContainer.insertBefore(elem, self.dialogsListContainer.firstElementChild);
     }
 
@@ -176,8 +176,8 @@ Dialog.prototype.replaceDialogLink = function (elem) {
         }
     }
 
-    if (elemPosition >= 5) {
-        self.dialogsListContainer.replaceChild(elem, self.dialogsListContainer.firstElementChild);
+    if (elemPosition >= 1) {
+        self.dialogsListContainer.insertBefore(elem, self.dialogsListContainer.firstElementChild);
     }
 };
 

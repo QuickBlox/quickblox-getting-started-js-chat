@@ -38,6 +38,7 @@
     flex: 0 0 80px;
     box-sizing: border-box;
     padding: 21px 19px 18px;
+    border-bottom: 1px solid #ddd;
 }
 
 .dashboard__logo {
@@ -419,6 +420,7 @@
     flex-wrap: nowrap;
     width: 100%;
     padding: 15px 25px;
+    position: relative;
 }
 
 .attachments_preview {
@@ -482,6 +484,9 @@
     cursor: pointer;
     font: 500 15px/18px 'Roboto', sans-serif;
     text-transform: uppercase;
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
 }
 
 

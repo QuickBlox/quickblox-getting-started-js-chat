@@ -35,6 +35,7 @@ App.prototype.loadWelcomeTpl = function () {
         welcomeTpl = helpers.fillTemplate('tpl_welcome');
     
     helpers.clearView(content);
+    dialogModule.dialogId = null;
     content.innerHTML = welcomeTpl;
 };
 
@@ -63,7 +64,7 @@ App.prototype.renderDashboard = function (activeTabName) {
 
     self.loadWelcomeTpl();
 
-    //listeners.setListeners();
+    listeners.setListeners();
 };
 
 App.prototype.loadChatList = function () {

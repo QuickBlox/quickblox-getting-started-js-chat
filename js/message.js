@@ -142,7 +142,7 @@ Message.prototype.getMessages = function (dialogId) {
             if(dialogModule.dialogId !== dialogId) return false;
 
             if(dialogModule._cache[dialogId].type === 1) {
-                self.checkUsersInPublicDialogMessages(messages.items, params.skip);
+                console.log('Public Dialog');
             }else {
                 for (var i = 0; i < messages.items.length; i++) {
                     var message = helpers.fillMessagePrams(messages.items[i]);
@@ -159,34 +159,6 @@ Message.prototype.getMessages = function (dialogId) {
         }
 
         self.container.classList.remove('loading');
-    });
-};
-
-Message.prototype.checkUsersInPublicDialogMessages = function (items, skip) {
-    var self = this,
-        messages = [].concat(items),
-        userList = [];
-
-    for (var i = 0; i < messages.length; i++) {
-        var id = messages[i].sender_id;
-
-        if(userList.indexOf(id) === -1) {
-            userList.push(id);
-        }
-    }
-
-    if(!userList.length) return false;
-    userModule.getUsersByIds(userList).then(function(){
-        for (var i = 0; i < messages.length; i++) {
-            var message = helpers.fillMessagePrams(messages[i]);
-            self.renderMessage(message, false);
-        }
-
-        if(!skip) {
-            helpers.scrollTo(self.container, 'bottom');
-        }
-    }).catch(function(error){
-        console.error(error);
     });
 };
 
@@ -283,126 +255,6 @@ Message.prototype.renderMessage = function (message, setAsFirst) {
 
         if(containerHeightBeforeAppend !== containerHeightAfterAppend) {
             self.container.scrollTop += containerHeightAfterAppend - containerHeightBeforeAppend;
-        }
-    }
-};
-
-Message.prototype.prepareToUpload = function (e) {
-    if(!app.checkInternetConnection()) {
-        return false;
-    }
-
-    var self = this,
-        files = e.currentTarget.files,
-        dialogId = dialogModule.dialogId;
-
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        self.uploadFilesAndGetIds(file, dialogId);
-    }
-
-    e.currentTarget.value = null;
-};
-
-Message.prototype.uploadFilesAndGetIds = function (file, dialogId) {
-    if(file.size >= CONSTANTS.ATTACHMENT.MAXSIZE) {
-        return alert(CONSTANTS.ATTACHMENT.MAXSIZEMESSAGE);
-    }
-
-    var self = this,
-        preview = self.addImagePreview(file);
-
-    QB.content.createAndUpload({
-        public: false,
-        file: file,
-        name: file.name,
-        type: file.type,
-        size: file.size
-    }, function (err, response) {
-        if(err) {
-            preview.remove();
-            console.error(err);
-            alert('ERROR: ' + err.detail);
-        }else {
-            preview.remove();
-
-            dialogModule._cache[dialogId].draft.attachments[response.uid] = helpers.getSrcFromAttachmentId(response.uid);
-
-            self.submitSendMessage(dialogId);
-        }
-    });
-};
-
-Message.prototype.addImagePreview = function (file) {
-    var self = this,
-        data = {
-            id: 'isLoading',
-            src: URL.createObjectURL(file)
-        },
-        template = helpers.fillTemplate('tpl_attachmentPreview', data),
-        wrapper = helpers.toHtml(template)[0];
-
-    self.attachmentPreviewContainer.appendChild(wrapper);
-
-    return wrapper;
-};
-
-Message.prototype.setTypingStatuses = function (isTyping, userId, dialogId) {
-    var self = this;
-
-    if(!self.typingUsers[dialogId]) {
-        self.typingUsers[dialogId] = [];
-    }
-
-    if(isTyping) {
-        self.typingUsers[dialogId].push(userId);
-    }else {
-        var list = self.typingUsers[dialogId];
-
-        self.typingUsers[dialogId] = list.filter(function (id) {
-            return id !== userId;
-        });
-    }
-    
-    self.renderTypingUsers(dialogId)
-};
-
-Message.prototype.renderTypingUsers = function (dialogId) {
-    var self = this,
-        userList = self.typingUsers[dialogId],
-        typingElem = document.querySelector('.j-istyping'),
-        users = userList.map(function (user) {
-            if(userModule._cache[user]) {
-                return userModule._cache[user]
-            }else {
-                userModule.getUsersByIds([user], function (err) {
-                    if(err) return false;
-
-                    var className = 'm-typing_' + user,
-                        userElem = document.querySelector('.' + className);
-
-                    if(!userElem || !userModule._cache[user]) return false;
-
-                    userElem.classList.remove(className, 'm-typing_uncnown');
-                    userElem.classList.add('m-user__img_' + userModule._cache[user].color);
-                });
-                return user;
-            }
-        });
-
-    if(typingElem) {
-        self.container.removeChild(typingElem);
-    }
-
-    if(users.length) {
-        var tpl = helpers.fillTemplate('tpl_message__typing', {users: users}),
-            elem = helpers.toHtml(tpl)[0],
-            scrollPosition = self.container.scrollHeight - (self.container.offsetHeight + self.container.scrollTop);
-
-        self.container.appendChild(elem);
-
-        if(scrollPosition < 50) {
-            helpers.scrollTo(self.container, 'bottom');
         }
     }
 };

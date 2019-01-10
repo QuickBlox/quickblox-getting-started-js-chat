@@ -30,6 +30,7 @@
     display: flex;
     flex-wrap: nowrap;
     text-decoration: none;
+    border-bottom: 1px solid #f5f5f5;
 }
 
 .open_sidebar {
