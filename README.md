@@ -1,5 +1,7 @@
 # QuickBlox JavaScript Getting Started Chat Sample
 
+![](animation.gif)
+
 This is a very basic JS application which would be a showcase for 1-1 chat. Code snippets from this sample app would be used in promo article. Existing sample application is too big and can't be used for article. Application should be without any branding or pre-defined credentials.
 
 ## Table of Contents

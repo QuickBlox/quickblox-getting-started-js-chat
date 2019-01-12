@@ -11,7 +11,6 @@ function App(config) {
     this._config = config;
     this.user = null;
     this.token = null;
-    this.isDashboardLoaded = false;
     this.room = null;
     // Elements
     this.page = document.querySelector('#page');
@@ -34,6 +33,7 @@ App.prototype.loadWelcomeTpl = function () {
     var content = document.querySelector('.j-content'),
         welcomeTpl = helpers.fillTemplate('tpl_welcome');
     
+    console.log(content);
     helpers.clearView(content);
     dialogModule.dialogId = null;
     content.innerHTML = welcomeTpl;
@@ -56,7 +56,6 @@ App.prototype.renderDashboard = function (activeTabName) {
 
     var logoutBtn = document.querySelector('.j-logout');
     loginModule.isLoginPageRendered = false;
-    self.isDashboardLoaded = true;
     self.content = document.querySelector('.j-content');
     self.sidebar = document.querySelector('.j-sidebar');
 

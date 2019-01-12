@@ -63,45 +63,6 @@ Listeners.prototype.onMessageListener = function (userId, message) {
     }
 };
 
-Listeners.prototype.onNotificationMessage = function(userId, message){
-    var self = this,
-        msg = helpers.fillNewMessageParams(userId, message),
-        dialog = dialogModule._cache[message.dialog_id],
-        extension = message.extension,
-        dialogId = message.dialog_id,
-        occupantsIdsAdded = extension.occupants_ids_added && extension.occupants_ids_added.split(',');
-
-    if(extension.notification_type === CONSTANTS.NOTIFICATION_TYPES.UPDATE_DIALOG){
-        if (extension.occupants_ids_removed) {
-            dialogModule._cache[dialogId].users = dialogModule._cache[dialogId].users.filter(function(user) {
-                return user !== userId;
-            });
-        } else if(extension.occupants_ids_added) {
-            _.each(occupantsIdsAdded, function(userId) {
-                if (dialog.users.indexOf(+userId) === -1) {
-                    dialog.users.push(+userId);
-                }
-            });
-        } else if(extension.dialog_name){
-            dialog.name = extension.dialog_name;
-            dialogModule.updateDialogUi(dialogId, extension.dialog_name);
-        }
-    }
-
-    dialogModule.renderDialog(dialog, true);
-
-    if (dialogModule.dialogId === msg.chat_dialog_id) {
-        messageModule.renderMessage(msg, true);
-    } else {
-        dialog.unread_messages_count += 1;
-        var dialogElem = document.getElementById(msg.chat_dialog_id),
-            counter = dialogElem.querySelector('.j-dialog_unread_counter');
-
-        counter.classList.remove('hidden');
-        counter.innerText = dialog.unread_messages_count;
-    }
-};
-
 Listeners.prototype.onSentMessageCallback = function (messageLost, messageSent) {
     var message = messageSent || messageLost,
         data = {

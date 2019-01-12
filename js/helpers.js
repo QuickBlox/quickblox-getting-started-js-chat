@@ -185,10 +185,6 @@ Helpers.prototype.escapeHTML = function (str) {
     return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 };
 
-Helpers.prototype.getSrcFromAttachmentId = function (id) {
-    return QB.content.publicUrl(id) + '.json?token=' + app.token;
-};
-
 Helpers.prototype.fillNewMessageParams = function (userId, msg) {
     var self = this,
         message = {

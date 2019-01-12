@@ -16,7 +16,6 @@ Login.prototype.isAlphaNumeric = function(str) {
             code !== 45 && //check for hiphen
             !(code > 47 && code < 58) && // numeric (0-9)
             !(code > 64 && code < 91) && // upper alpha (A-Z)
-            code !== 95 && // check for underscore
             !(code > 96 && code < 123) // lower alpha (a-z)
         ) { 
             return false;

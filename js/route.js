@@ -16,9 +16,6 @@ router.on({
     '/dashboard': function() {
         if(!loginModule.isLogin) {
             router.navigate('/login');
-        }else if(app.isDashboardLoaded) {
-            app.loadWelcomeTpl();
-            app.sidebar.classList.add('active');
         }else {
             app.renderDashboard('chat');
             dialogModule.loadDialogs('chat');
