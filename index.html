@@ -30,13 +30,15 @@
                         </div>
                         <form name="loginForm" class="login__form">
                             <div class="login_form__row">
-                                <label for="userName">User name</label>
+                                <label for="logIn">Login</label>
+                                <input type="text" id="logIn" name="logIn"/>
+                            </div>
+
+                            <div class="login_form__row">
+                                <label for="userName">User Name</label>
                                 <input type="text" id="userName" name="userName"/>
                             </div>
-                            <div class="login_form__row">
-                                <label for="userGroup">User group</label>
-                                <input type="text" id="userGroup" name="userGroup"/>
-                            </div>
+                    
                             <div class="login__button_wrap">
                                 <button type="submit" name="login_submit" class="btn m-login__button j-login__button" disabled>
                                     login
@@ -148,11 +150,6 @@
             <div class="content__title j-content__title j-dialog">
                 <button class="open_sidebar j-open_sidebar"></button>
                 <h1 class="dialog__title j-dialog__title"><%- title %></h1>
-                <div class="action_links">
-                    <a href="#" class="quit_fom_dialog_link j-quit_fom_dialog_link <% type === 1 ? print('hidden') : ''%>" data-dialog="<%- _id %>">
-                        <i class="material-icons">delete</i>
-                    </a>
-                </div>
             </div>
             <div class="content__inner j-content__inner">
                 <div class=" messages j-messages"></div>

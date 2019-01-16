@@ -13,9 +13,6 @@ function Dialog() {
     this.dialogTitle = null;
     this.dialogsListContainer = null;
     this.messagesContainer = null;
-    this.editLink = null;
-    this.quitLink = null;
-    this.attachmentsPreviewContainer = null;
 }
 
 Dialog.prototype.init = function () {
@@ -107,10 +104,8 @@ Dialog.prototype.renderDialog = function (dialog, setAsFirst) {
     elem = helpers.toHtml(template)[0];
 
     if (!setAsFirst) {
-        console.log(setAsFirst, 'rendeering dialog');
         self.dialogsListContainer.appendChild(elem);
     } else {
-        console.log(setAsFirst, 'rendeering dialog');
         self.dialogsListContainer.insertBefore(elem, self.dialogsListContainer.firstElementChild);
     }
 
@@ -191,22 +186,13 @@ Dialog.prototype.renderMessages = function (dialogId) {
         helpers.clearView(this.content);
         self.content.innerHTML = helpers.fillTemplate('tpl_conversationContainer', {title: dialog.name, _id: dialog._id, type: dialog.type});
         self.messagesContainer = document.querySelector('.j-messages');
-        self.attachmentsPreviewContainer = self.content.querySelector('.j-attachments_preview');
         self.dialogTitle = document.querySelector('.j-dialog__title');
-        self.editLink = document.querySelector('.j-add_to_dialog');
-        self.quitLink = document.querySelector('.j-quit_fom_dialog_link');
         
         document.querySelector('.j-open_sidebar').addEventListener('click', function (e) {
             self.sidebar.classList.add('active');
         }.bind(self));
 
         messageModule.init();
-
-        self.quitLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            if(dialog.type === CONSTANTS.DIALOG_TYPES.PUBLICCHAT) return;
-            self.quitFromTheDialog(this.dataset.dialog);
-        });
     } else {
 
         self.dialogTitle.innerText = dialog.name;
@@ -223,12 +209,7 @@ Dialog.prototype.renderMessages = function (dialogId) {
             }
         }
 
-        self.editLink.href = '#!/dialog/' + self.dialogId + '/edit';
-        self.quitLink.dataset.dialog = dialogId;
-
         helpers.clearView(self.messagesContainer);
-        helpers.clearView(self.attachmentsPreviewContainer);
-        document.forms.send_message.attach_file.value = null;
     }
 
     messageModule.setLoadMoreMessagesListener();

@@ -155,9 +155,8 @@ Helpers.prototype.getMessageStatus = function(message) {
     var self = this,
         deleveredToOcuupants = self.checkIsMessageDeliveredToOccupants(message),
         readedByOcuupants = self.checkIsMessageReadedByOccupants(message),
-        status = !deleveredToOcuupants ? 'not delivered yet' :
+        status = !deleveredToOcuupants ? 'sent' :
             readedByOcuupants ? 'seen' : 'delivered';
-
 
     return status;
 };

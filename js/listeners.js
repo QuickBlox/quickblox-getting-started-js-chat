@@ -75,7 +75,7 @@ Listeners.prototype.onSentMessageCallback = function (messageLost, messageSent) 
         data.status = 'not sent';
     } else {
         // message was sent to the chat but not delivered to che opponent.
-        data.status = 'not delivered yet';
+        data.status = 'sent';
     }
 
     messageModule.setMessageStatus(data);

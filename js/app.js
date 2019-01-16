@@ -33,7 +33,6 @@ App.prototype.loadWelcomeTpl = function () {
     var content = document.querySelector('.j-content'),
         welcomeTpl = helpers.fillTemplate('tpl_welcome');
     
-    console.log(content);
     helpers.clearView(content);
     dialogModule.dialogId = null;
     content.innerHTML = welcomeTpl;

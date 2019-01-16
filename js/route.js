@@ -65,7 +65,7 @@ router.on({
                     app.loadChatList();
                     router.navigate('/dashboard');
                 });
-            } else {
+            }else {
                 dialogModule.renderMessages(dialogId);
                 dialogModule.selectCurrentDialog(dialogId);
             }

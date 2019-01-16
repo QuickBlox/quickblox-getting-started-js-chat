@@ -142,7 +142,7 @@ Login.prototype.renderLoginPage = function() {
 Login.prototype.setListeners = function() {
     var self = this,
         loginForm = document.forms.loginForm,
-        formInputs = [loginForm.userName, loginForm.userGroup],
+        formInputs = [loginForm.userName, loginForm.logIn],
         loginBtn = loginForm.login_submit;
 
     loginForm.addEventListener('submit', function(e) {
@@ -155,15 +155,15 @@ Login.prototype.setListeners = function() {
         }
 
         var userName = loginForm.userName.value.trim(),
-            userGroup = loginForm.userGroup.value.trim();
+            logIn = loginForm.logIn.value.trim();
 
-        if(!self.validateUserNameAndGroup(userName, 'Username') || !self.validateUserNameAndGroup(userName, 'User Group')) return false;
+        if(!self.validateUserNameAndGroup(userName, 'User Name') || !self.validateUserNameAndGroup(userName, 'Login')) return false;
 
         var user = {
-            login: 'articleSample_' + userName,
+            login: 'articleSample_' + logIn + '_' + userName,
             password: 'webAppArticlePass',
             full_name: userName,
-            tag_list: userGroup
+            tag_list: logIn
         };
 
         self.login(user).then(function() {
@@ -198,8 +198,8 @@ Login.prototype.setListeners = function() {
 
         i.addEventListener('input', function() {
             var userName = loginForm.userName.value.trim(),
-                userGroup = loginForm.userGroup.value.trim();
-            if(self.validateUserNameAndGroup(userName, null, true) && self.validateUserNameAndGroup(userGroup, null, true)) {
+                logIn = loginForm.logIn.value.trim();
+            if(self.validateUserNameAndGroup(userName, null, true) && self.validateUserNameAndGroup(logIn, null, true)) {
                 loginBtn.removeAttribute('disabled');
             }else {
                 loginBtn.setAttribute('disabled', true);
